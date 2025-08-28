@@ -1,5 +1,8 @@
 package edu.javeriana.process.repository;
 
-public class ActivityRepository {
-    
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import edu.javeriana.process.model.Activity;
+
+public interface ActivityRepository extends JpaRepository<Activity, Long> {
 }
