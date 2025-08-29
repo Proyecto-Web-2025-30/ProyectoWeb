@@ -1,4 +1,4 @@
-package edu.javeriana.process.dtos;
+package edu.javeriana.process.DTOs;
 
 import edu.javeriana.process.model.Activity;
 import edu.javeriana.process.model.Process;
@@ -52,6 +52,6 @@ public class ActivityDTO {
 
     public Activity toEntity(Process process) {
         // Usa el ctor Activity(String name, Double x, Double y, String description, Double width, Double height, String status, Process process)
-        return new Activity(name, x, y, description, width, height, status, process);
+        return new Activity(id, name, x, y, description, width, height, status, process);
     }
 }

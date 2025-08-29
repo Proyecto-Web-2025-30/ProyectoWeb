@@ -1,4 +1,4 @@
-package edu.javeriana.process.dtos;
+package edu.javeriana.process.DTOs;
 
 import edu.javeriana.process.model.Process;
 import jakarta.validation.constraints.NotBlank;
@@ -37,6 +37,6 @@ public class ProcessDTO {
 
     public Process toEntity() {
         // Usa el constructor de Process(String name, String description, String status)
-        return new Process(name, description, status);
+        return new Process(id, name, description, status);
     }
 }

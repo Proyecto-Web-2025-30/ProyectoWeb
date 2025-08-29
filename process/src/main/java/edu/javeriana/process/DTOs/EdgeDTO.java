@@ -1,4 +1,4 @@
-package edu.javeriana.process.dtos;
+package edu.javeriana.process.DTOs;
 
 import edu.javeriana.process.model.Edge;
 import jakarta.validation.constraints.NotBlank;
