@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Iniciar sesión</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/css/app.css" rel="stylesheet">
+</head>
+<body>
+<h1>Login</h1>
+
+<div th:if="${param.error}" style="color:#b91c1c;">Credenciales inválidas</div>
+<div th:if="${param.logout}" style="color:#065f46;">Sesión cerrada</div>
+
+<form th:action="@{/login}" method="post">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+    <div>
+        <label for="email">Correo</label>
+        <input id="email" type="email" name="username" required>
+    </div>
+    <div>
+        <label for="pwd">Contraseña</label>
+        <input id="pwd" type="password" name="password" required>
+    </div>
+    <button type="submit">Entrar</button>
+</form>
+
+<p><a th:href="@{/register-company}">¿Primera vez? Registra tu empresa</a></p>
+
+<script src="/js/app.js"></script>
+</body>
+</html>

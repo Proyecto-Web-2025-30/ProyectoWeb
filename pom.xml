@@ -40,6 +40,12 @@
       <artifactId>spring-boot-starter-validation</artifactId>
     </dependency>
 
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-thymeleaf</artifactId>
+    </dependency>
+
+
     <!-- MySQL Driver -->
     <dependency>
       <groupId>com.mysql</groupId>
@@ -54,12 +60,28 @@
       <scope>provided</scope>
     </dependency>
 
+
     <!-- Tests -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
+
+    <!-- Seguridad -->
+      <dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-security</artifactId>
+      </dependency>
+      <dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-security</artifactId>
+      </dependency>
+      <dependency>
+          <groupId>org.springframework.security</groupId>
+          <artifactId>spring-security-test</artifactId>
+          <scope>test</scope>
+      </dependency>
   </dependencies>
 
   <build>
@@ -81,13 +103,6 @@
               <version>${lombok.version}</version>
             </path>
           </annotationProcessorPaths>
-          <testAnnotationProcessorPaths>
-            <path>
-              <groupId>org.projectlombok</groupId>
-              <artifactId>lombok</artifactId>
-              <version>${lombok.version}</version>
-            </path>
-          </testAnnotationProcessorPaths>
         </configuration>
       </plugin>
 

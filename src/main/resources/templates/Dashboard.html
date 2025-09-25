@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/css/app.css" rel="stylesheet">
+</head>
+<body>
+<h1>Bienvenido</h1>
+<p>Acceso concedido. Aquí irán los procesos de tu empresa.</p>
+
+<nav>
+    <a th:href="@{/processes}">Procesos</a> |
+    <a th:href="@{/users/invite}">Invitar usuario</a>
+</nav>
+
+<form th:action="@{/logout}" method="post" style="margin-top:1rem;">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+    <button type="submit">Cerrar sesión</button>
+</form>
+
+<script src="/js/app.js"></script>
+</body>
+</html>

@@ -1,5 +1,5 @@
 package edu.javeriana.process.service;
 
-public class EdgeService {
+public interface EdgeService {
     
 }

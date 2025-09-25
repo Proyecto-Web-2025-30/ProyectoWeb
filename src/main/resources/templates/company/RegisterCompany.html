@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrar Empresa</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/css/app.css" rel="stylesheet">
+</head>
+<body>
+<h1>Registro de Empresa</h1>
+
+<div th:if="${success}" th:text="${success}" style="color:#065f46;"></div>
+<div th:if="${error}" th:text="${error}" style="color:#b91c1c;"></div>
+
+<form th:action="@{/register-company}" th:object="${form}" method="post" novalidate>
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
+    <div>
+        <label for="companyName">Nombre empresa</label>
+        <input id="companyName" th:field="*{companyName}" required maxlength="150">
+        <div th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}" style="color:#b91c1c;"></div>
+    </div>
+
+    <div>
+        <label for="nit">NIT</label>
+        <input id="nit" th:field="*{nit}" required maxlength="50">
+        <div th:if="${#fields.hasErrors('nit')}" th:errors="*{nit}" style="color:#b91c1c;"></div>
+    </div>
+
+    <div>
+        <label for="adminEmail">Correo admin</label>
+        <input id="adminEmail" th:field="*{adminEmail}" required type="email">
+        <div th:if="${#fields.hasErrors('adminEmail')}" th:errors="*{adminEmail}" style="color:#b91c1c;"></div>
+    </div>
+
+    <div>
+        <label for="adminFullName">Nombre completo admin</label>
+        <input id="adminFullName" th:field="*{adminFullName}" required maxlength="150">
+        <div th:if="${#fields.hasErrors('adminFullName')}" th:errors="*{adminFullName}" style="color:#b91c1c;"></div>
+    </div>
+
+    <div>
+        <label for="adminPassword">Contraseña admin</label>
+        <input id="adminPassword" th:field="*{adminPassword}" type="password" required minlength="8">
+        <div th:if="${#fields.hasErrors('adminPassword')}" th:errors="*{adminPassword}" style="color:#b91c1c;"></div>
+    </div>
+
+    <button type="submit">Crear</button>
+    <a th:href="@{/login}">Ir a login</a>
+</form>
+
+<script src="/js/app.js"></script>
+</body>
+</html>

@@ -1,5 +1,8 @@
 package edu.javeriana.process.service;
 
-public class ProcessServiceImpl {
+import org.springframework.stereotype.Service;
+
+@Service
+public class ProcessServiceImpl implements ProcessService {
     
 }

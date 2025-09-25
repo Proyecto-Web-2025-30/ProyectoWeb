@@ -1,5 +1,8 @@
 package edu.javeriana.process.service;
 
-public class EdgeServiceImpl {
+import org.springframework.stereotype.Service;
+
+@Service
+public class EdgeServiceImpl implements EdgeService {
     
 }
