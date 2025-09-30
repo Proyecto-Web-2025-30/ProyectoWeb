@@ -38,4 +38,47 @@ public class UserServiceImpl implements UserService {
         return userRepo.findByEmail(email.toLowerCase())
                 .orElseThrow(() -> new IllegalArgumentException("Usuario no existe"));
     }
+
+    @Override
+    public AppUser create(AppUser user) {
+        // Encriptamos la contraseña antes de guardar
+        user.setPasswordHash(encoder.encode(user.getPasswordHash()));
+        return userRepo.save(user);
+    }
+
+    @Override
+    public AppUser getById(Long id) {
+        return userRepo.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+    }
+
+    @Override
+    public List<AppUser> getAll() {
+        return userRepo.findAll();
+    }
+
+    @Override
+    public AppUser update(Long id, AppUser user) {
+        AppUser existing = getById(id);
+        existing.setEmail(user.getEmail());
+        existing.setFullName(user.getFullName());
+        existing.setRole(user.getRole());
+        existing.setCompany(user.getCompany());
+        existing.setEnabled(user.isEnabled());
+
+        // Solo actualizar password si viene una nueva
+        if (user.getPasswordHash() != null && !user.getPasswordHash().isBlank()) {
+            existing.setPasswordHash(encoder.encode(user.getPasswordHash()));
+        }
+
+        return userRepo.save(existing);
+    }
+
+    @Override
+    public void delete(Long id) {
+        if (!userRepo.existsById(id)) {
+            throw new IllegalArgumentException("Usuario no existe");
+        }
+        userRepo.deleteById(id);
+    }
 }

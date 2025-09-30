@@ -8,6 +8,8 @@ import edu.javeriana.process.model.*;
 import edu.javeriana.process.repository.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class CompanyServiceImpl implements CompanyService {
@@ -42,6 +44,37 @@ public class CompanyServiceImpl implements CompanyService {
     public Company getById(Long id) {
         return companyRepo.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Empresa no existe"));
+    }
+
+    @Transactional
+    @Override
+    public Company create(Company company) {
+        return companyRepo.save(company);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<Company> getAll() {
+        return companyRepo.findAll();
+    }
+
+    @Transactional
+    @Override
+    public Company update(Long id, Company updated) {
+        Company existing = getById(id); // Lanza excepción si no existe
+        existing.setName(updated.getName());
+        existing.setNit(updated.getNit());
+        existing.setContactEmail(updated.getContactEmail());
+        return companyRepo.save(existing);
+    }
+
+    @Transactional
+    @Override
+    public void delete(Long id) {
+        if (!companyRepo.existsById(id)) {
+            throw new IllegalArgumentException("Empresa no existe");
+        }
+        companyRepo.deleteById(id);
     }
 }
 
