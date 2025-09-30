@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrar Empresa - Process Manager</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/css/app.css" rel="stylesheet">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="card wide-card">
+            <div class="text-center mb-3">
+                <div class="icon-circle" style="margin: 0 auto;">
+                    <span style="font-size: 2rem;">🏢</span>
+                </div>
+                <h1>Registro de Empresa</h1>
+                <p class="subtitle">Completa los datos para crear tu cuenta empresarial y comenzar a gestionar procesos de forma eficiente</p>
+            </div>
+
+            <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+            <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
+
+            <form th:action="@{/register-company}" th:object="${form}" method="post" novalidate>
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
+                <h2 style="font-size: 1.1rem; margin-top: 1.5rem; margin-bottom: 1rem; color: var(--color-primary-dark);">
+                    📋 Información de la Empresa
+                </h2>
+
+                <div class="form-group">
+                    <label for="companyName">Nombre de la empresa</label>
+                    <input id="companyName" type="text" th:field="*{companyName}" placeholder="Ej: Tech Solutions S.A.S." required maxlength="150">
+                    <span th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}" class="error-text"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="nit">NIT</label>
+                    <input id="nit" type="text" th:field="*{nit}" placeholder="Ej: 900123456-7" required maxlength="50">
+                    <span th:if="${#fields.hasErrors('nit')}" th:errors="*{nit}" class="error-text"></span>
+                </div>
+
+                <div class="divider"></div>
+
+                <h2 style="font-size: 1.1rem; margin-bottom: 1rem; color: var(--color-primary-dark);">
+                    👤 Datos del Administrador
+                </h2>
+
+                <div class="form-group">
+                    <label for="adminFullName">Nombre completo del administrador</label>
+                    <input id="adminFullName" type="text" th:field="*{adminFullName}" placeholder="Ej: María González" required maxlength="150">
+                    <span th:if="${#fields.hasErrors('adminFullName')}" th:errors="*{adminFullName}" class="error-text"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="adminEmail">Correo electrónico del administrador</label>
+                    <input id="adminEmail" type="email" th:field="*{adminEmail}" placeholder="admin@empresa.com" required>
+                    <span th:if="${#fields.hasErrors('adminEmail')}" th:errors="*{adminEmail}" class="error-text"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="adminPassword">Contraseña</label>
+                    <input id="adminPassword" type="password" th:field="*{adminPassword}" placeholder="Mínimo 8 caracteres" required minlength="8">
+                    <span th:if="${#fields.hasErrors('adminPassword')}" th:errors="*{adminPassword}" class="error-text"></span>
+                    <small style="color: var(--color-text-light); font-size: 0.85rem; display: block; margin-top: 0.4rem;">
+                        💡 Usa una contraseña segura con letras, números y símbolos
+                    </small>
+                </div>
+
+                <div class="flex-center" style="margin-top: 2rem; gap: 1rem;">
+                    <button type="submit" class="btn-primary">
+                        Crear cuenta
+                    </button>
+                    <a th:href="@{/login}" class="btn btn-secondary">
+                        Cancelar
+                    </a>
+                </div>
+            </form>
+
+            <p class="text-center mt-3">
+                <span style="color: var(--color-text-light);">¿Ya tienes una cuenta?</span>
+                <a th:href="@{/login}">Inicia sesión aquí</a>
+            </p>
+        </div>
+    </div>
+
+    <script src="/js/app.js"></script>
+</body>
+</html>

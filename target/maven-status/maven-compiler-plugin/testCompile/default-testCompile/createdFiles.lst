@@ -1,0 +1,6 @@
+edu\javeriana\process\service\UserServiceImplTest.class
+edu\javeriana\process\service\CompanyServiceImplTest.class
+edu\javeriana\process\service\EdgeServiceImplTest.class
+edu\javeriana\process\service\ActivityServiceImplTest.class
+edu\javeriana\process\service\InvitationServiceImplTest.class
+edu\javeriana\process\service\ProcessServiceImplTest.class

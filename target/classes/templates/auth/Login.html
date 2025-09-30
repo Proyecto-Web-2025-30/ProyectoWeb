@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Iniciar sesión - Process Manager</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/css/app.css" rel="stylesheet">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="card">
+            <div class="text-center mb-3">
+                <div class="icon-circle" style="margin: 0 auto;">
+                    <span style="font-size: 2rem;">🔐</span>
+                </div>
+                <h1>Bienvenido</h1>
+                <p class="subtitle">Inicia sesión para gestionar tus procesos empresariales</p>
+            </div>
+
+            <div th:if="${param.error}" class="alert alert-error">
+                Credenciales inválidas. Por favor, verifica tu correo y contraseña.
+            </div>
+            <div th:if="${param.logout}" class="alert alert-success">
+                Sesión cerrada exitosamente. ¡Hasta pronto!
+            </div>
+
+            <form th:action="@{/login}" method="post">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                
+                <div class="form-group">
+                    <label for="email">
+                        <span>📧</span> Correo electrónico
+                    </label>
+                    <input id="email" type="email" name="username" placeholder="tu@empresa.com" required autocomplete="email">
+                </div>
+                
+                <div class="form-group">
+                    <label for="pwd">
+                        <span>🔑</span> Contraseña
+                    </label>
+                    <input id="pwd" type="password" name="password" placeholder="••••••••" required autocomplete="current-password">
+                </div>
+                
+                <button type="submit" style="width: 100%; margin-top: 0.5rem;">
+                    Iniciar sesión
+                </button>
+            </form>
+
+            <div class="divider"></div>
+
+            <p class="text-center">
+                <span style="color: var(--color-text-light);">¿Primera vez aquí?</span><br>
+                <a th:href="@{/register-company}" style="font-size: 1.05rem;">
+                    Registra tu empresa <span style="font-size: 1.2rem;">→</span>
+                </a>
+            </p>
+        </div>
+    </div>
+
+    <script src="/js/app.js"></script>
+</body>
+</html>
