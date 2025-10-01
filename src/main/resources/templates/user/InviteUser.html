@@ -2,39 +2,95 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Invitar usuario</title>
+    <title>Invitar Usuario - Process Manager</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="/css/app.css" rel="stylesheet">
 </head>
 <body>
-<h1>Invitar usuario</h1>
+    <nav class="navbar">
+        <div class="navbar-content">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <span style="font-size: 1.8rem;">📊</span>
+                <h2 style="margin: 0; font-size: 1.3rem;">Process Manager</h2>
+            </div>
+            <div class="nav-links">
+                <a th:href="@{/dashboard}" class="nav-link">🏠 Dashboard</a>
+                <a th:href="@{/processes}" class="nav-link">📋 Procesos</a>
+            </div>
+        </div>
+    </nav>
 
-<div th:if="${success}" th:text="${success}" style="color:#065f46;"></div>
-<div th:if="${error}" th:text="${error}" style="color:#b91c1c;"></div>
+    <div class="page-container">
+        <div style="max-width: 600px; margin: 0 auto;">
+            <div class="card">
+                <div class="text-center mb-3">
+                    <div class="icon-circle" style="margin: 0 auto;">
+                        <span style="font-size: 2rem;">✉️</span>
+                    </div>
+                    <h1>Invitar Usuario</h1>
+                    <p class="subtitle">Agrega nuevos miembros a tu equipo para colaborar en la gestión de procesos</p>
+                </div>
 
-<form th:action="@{/users/invite}" th:object="${form}" method="post">
-    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-    <!-- Seguridad: se rellena con la empresa del usuario autenticado -->
-    <input type="hidden" th:field="*{companyId}">
+                <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+                <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
 
-    <div>
-        <label for="email">Correo a invitar</label>
-        <input id="email" th:field="*{email}" type="email" required>
-        <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color:#b91c1c;"></div>
+                <form th:action="@{/users/invite}" th:object="${form}" method="post">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                    <input type="hidden" th:field="*{companyId}">
+
+                    <div class="form-group">
+                        <label for="email">
+                            <span>📧</span> Correo electrónico del nuevo usuario
+                        </label>
+                        <input id="email" type="email" th:field="*{email}" placeholder="usuario@empresa.com" required>
+                        <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error-text"></span>
+                        <small style="color: var(--color-text-light); font-size: 0.85rem; display: block; margin-top: 0.4rem;">
+                            Se enviará una invitación a este correo para que complete su registro
+                        </small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="role">
+                            <span>🎭</span> Rol del usuario
+                        </label>
+                        <select id="role" th:field="*{role}">
+                            <option th:each="r : ${roles}" th:value="${r}" th:text="${r}"></option>
+                        </select>
+                        <span th:if="${#fields.hasErrors('role')}" th:errors="*{role}" class="error-text"></span>
+                        <small style="color: var(--color-text-light); font-size: 0.85rem; display: block; margin-top: 0.4rem;">
+                            💡 Selecciona el nivel de acceso que tendrá el usuario en el sistema
+                        </small>
+                    </div>
+
+                    <div style="background: #F5F7FA; padding: 15px; border-radius: var(--radius-sm); margin-top: 1.5rem; margin-bottom: 1.5rem;">
+                        <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--color-text);">ℹ️ Información sobre roles</div>
+                        <ul style="margin: 0; padding-left: 1.5rem; color: var(--color-text-light); font-size: 0.85rem; line-height: 1.8;">
+                            <li><strong>ADMIN:</strong> Acceso completo al sistema</li>
+                            <li><strong>MANAGER:</strong> Gestión de procesos y usuarios</li>
+                            <li><strong>USER:</strong> Visualización y edición de procesos</li>
+                        </ul>
+                    </div>
+
+                    <div class="flex-center" style="margin-top: 2rem;">
+                        <button type="submit" class="btn-primary">
+                            📤 Enviar invitación
+                        </button>
+                        <a th:href="@{/dashboard}" class="btn btn-secondary">
+                            Cancelar
+                        </a>
+                    </div>
+                </form>
+            </div>
+
+            <div style="background: var(--color-card); padding: 25px; border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); margin-top: 2rem;">
+                <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">📋 Usuarios invitados recientemente</h3>
+                <p style="color: var(--color-text-light); font-size: 0.9rem;">
+                    Las invitaciones enviadas aparecerán aquí. Los usuarios recibirán un correo con un enlace para completar su registro.
+                </p>
+            </div>
+        </div>
     </div>
 
-    <div>
-        <label for="role">Rol</label>
-        <select id="role" th:field="*{role}">
-            <option th:each="r : ${roles}" th:value="${r}" th:text="${r}"></option>
-        </select>
-        <div th:if="${#fields.hasErrors('role')}" th:errors="*{role}" style="color:#b91c1c;"></div>
-    </div>
-
-    <button type="submit">Enviar invitación</button>
-    <a th:href="@{/dashboard}">Volver</a>
-</form>
-
-<script src="/js/app.js"></script>
+    <script src="/js/app.js"></script>
 </body>
 </html>
