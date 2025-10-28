@@ -40,6 +40,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public AppUser getByEmail(String email) {
+        return userRepo.findByEmail(email.toLowerCase()).orElse(null);
+    }
+
+    @Override
     public AppUser create(AppUser user) {
         // Encriptamos la contraseña antes de guardar
         user.setPasswordHash(encoder.encode(user.getPasswordHash()));

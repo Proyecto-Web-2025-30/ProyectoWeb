@@ -7,6 +7,7 @@ public interface UserService {
     AppUser createFromInvitation(Invitation inv, String fullName, String rawPassword);
     List<AppUser> listByCompany(Company company);
     AppUser getByEmailOrThrow(String email);
+    AppUser getByEmail(String email); // Para APIs REST
 
     AppUser create(AppUser user);         //CREATE
     AppUser getById(Long id);             //READ
