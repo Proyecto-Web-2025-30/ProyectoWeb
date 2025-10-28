@@ -5,9 +5,13 @@ import edu.javeriana.process.model.Process;
 import edu.javeriana.process.repository.ActivityRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,10 +19,14 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 class ActivityServiceImplTest {
 
     @Mock
     private ActivityRepository activityRepo;
+
+    @Mock
+    private org.modelmapper.ModelMapper modelMapper;
 
     @InjectMocks
     private ActivityServiceImpl activityService;
@@ -27,9 +35,7 @@ class ActivityServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
-
-        Process process = new Process(); // entidad relacionada
+        Process process = new Process();
         process.setId(1L);
 
         activity = new Activity();
@@ -98,6 +104,21 @@ class ActivityServiceImplTest {
         updated.setHeight(60.0);
         updated.setStatus("INACTIVO");
         updated.setProcess(activity.getProcess());
+
+        // Se simula el mapeo del modelMapper
+        doAnswer(invocation -> {
+            Activity src = invocation.getArgument(0);
+            Activity dest = invocation.getArgument(1);
+            dest.setName(src.getName());
+            dest.setX(src.getX());
+            dest.setY(src.getY());
+            dest.setDescription(src.getDescription());
+            dest.setWidth(src.getWidth());
+            dest.setHeight(src.getHeight());
+            dest.setStatus(src.getStatus());
+            dest.setProcess(src.getProcess());
+            return null;
+        }).when(modelMapper).map(any(Activity.class), any(Activity.class));
 
         when(activityRepo.findById(1L)).thenReturn(Optional.of(activity));
         when(activityRepo.save(any(Activity.class))).thenReturn(updated);

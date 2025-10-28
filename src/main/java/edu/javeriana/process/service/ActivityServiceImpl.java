@@ -1,8 +1,12 @@
 package edu.javeriana.process.service;
 
+import edu.javeriana.process.DTOs.ActivityDTO;
 import edu.javeriana.process.model.Activity;
+import edu.javeriana.process.model.Process;
 import edu.javeriana.process.repository.ActivityRepository;
+import edu.javeriana.process.repository.ProcessRepository;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +17,8 @@ import java.util.List;
 public class ActivityServiceImpl implements ActivityService {
 
     private final ActivityRepository activityRepo;
+    private final ProcessRepository processRepo;
+    private final ModelMapper modelMapper;
 
     @Transactional
     @Override
@@ -36,15 +42,8 @@ public class ActivityServiceImpl implements ActivityService {
     @Transactional
     @Override
     public Activity update(Long id, Activity updated) {
-        Activity existing = getById(id); // lanza excepción si no existe
-        existing.setName(updated.getName());
-        existing.setX(updated.getX());
-        existing.setY(updated.getY());
-        existing.setDescription(updated.getDescription());
-        existing.setWidth(updated.getWidth());
-        existing.setHeight(updated.getHeight());
-        existing.setStatus(updated.getStatus());
-        existing.setProcess(updated.getProcess());
+        Activity existing = getById(id);
+        modelMapper.map(updated, existing);
         return activityRepo.save(existing);
     }
 
@@ -55,5 +54,19 @@ public class ActivityServiceImpl implements ActivityService {
             throw new IllegalArgumentException("Actividad no existe");
         }
         activityRepo.deleteById(id);
+    }
+
+    @Override
+    public ActivityDTO toDto(Activity activity) {
+        return modelMapper.map(activity, ActivityDTO.class);
+    }
+
+    @Override
+    public Activity toEntity(ActivityDTO dto) {
+        Activity activity = modelMapper.map(dto, Activity.class);
+        Process process = processRepo.findById(dto.getProcessId())
+                .orElseThrow();
+        activity.setProcess(process);
+        return activity;
     }
 }

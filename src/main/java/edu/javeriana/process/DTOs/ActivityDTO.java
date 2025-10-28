@@ -35,23 +35,4 @@ public class ActivityDTO {
     // Exponemos solo el id del proceso
     @NotNull
     private Long processId;
-
-    public static ActivityDTO from(Activity a) {
-        return new ActivityDTO(
-            a.getId(),
-            a.getName(),
-            a.getX(),
-            a.getY(),
-            a.getDescription(),
-            a.getWidth(),
-            a.getHeight(),
-            a.getStatus(),
-            (a.getProcess() != null ? a.getProcess().getId() : null)
-        );
-    }
-
-    public Activity toEntity(Process process) {
-        // Usa el ctor Activity(String name, Double x, Double y, String description, Double width, Double height, String status, Process process)
-        return new Activity(id, name, x, y, description, width, height, status, process);
-    }
 }

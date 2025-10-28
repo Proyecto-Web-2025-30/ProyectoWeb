@@ -1,5 +1,6 @@
 package edu.javeriana.process.service;
 
+import edu.javeriana.process.DTOs.ActivityDTO;
 import edu.javeriana.process.model.Activity;
 import java.util.List;
 
@@ -9,4 +10,6 @@ public interface ActivityService {
     List<Activity> getAll();                    // READ all
     Activity update(Long id, Activity activity);// UPDATE
     void delete(Long id);                       // DELETE
+    ActivityDTO toDto(Activity activity);
+    Activity toEntity(ActivityDTO dto);
 }
